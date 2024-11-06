@@ -1,0 +1,5 @@
+vit-pytorch
+performer-pytorch
+pytorch-fast-transformers>=0.3.0
+nystrom-attention
+wandb
