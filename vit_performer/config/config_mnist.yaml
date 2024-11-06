@@ -9,18 +9,19 @@ model:
   model_dim: 512
   heads: 8
   dim_head: 64
+  kernel_fn: "ReLU"
 
 # Training hyperparameters
 train:
   batch_size: 64
   test_batch_size: 1000
-  epochs: 14
+  epochs: 11
   lr: 1.0
   gamma: 0.7
-  optimizer: "AdamW"  # Or use "Adadelta"
+  optimizer: "Adadelta"  
   weight_decay: 0.01
-  scheduler: "CosineAnnealingLR"  # Options: "StepLR", "CosineAnnealingLR"
-  T_max: 100  # Only used if scheduler is CosineAnnealingLR
+  scheduler: "StepLR"  
+  save_model: True
 
 # Dataset settings
 dataset:

@@ -10,5 +10,6 @@ pip install -r vit_performer/requirements.txt
 ## Run
 
 ```
-python vit_performer/mnist_vit_performer.py --kernel_fn ReLU --dataset MNIST
+cd vit_performer
+python mnist_vit_performer.py --config config/config_mnist.yaml
 ```
