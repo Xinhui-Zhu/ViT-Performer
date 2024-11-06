@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
-from torch.optim.lr_scheduler import StepLR
+from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 from vit_pytorch.efficient import ViT
 from performer_pytorch import Performer
 import wandb
@@ -24,7 +24,8 @@ def train(args, model, device, train_loader, optimizer, epoch):
         loss.backward()
         optimizer.step()
         # Log loss to wandb
-        wandb.log({"train_loss": loss.item(), "epoch": epoch})
+        if args.use_wandb:
+            wandb.log({"train_loss": loss.item(), "epoch": epoch})
         if batch_idx % args.log_interval == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
@@ -33,7 +34,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
                 break
 
 
-def test(model, device, test_loader):
+def test(args, model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
@@ -53,7 +54,8 @@ def test(model, device, test_loader):
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset), accuracy))
     # Log test loss and accuracy to wandb
-    wandb.log({"test_loss": test_loss, "test_accuracy": accuracy})
+    if args.use_wandb:
+        wandb.log({"test_loss": test_loss, "test_accuracy": accuracy})
 
 
 def main():
@@ -85,14 +87,19 @@ def main():
                         help='Fast attention kernels')
     parser.add_argument('--dataset', type=str, default="MNIST",
                         help='Training and testing dataset name')
-    
+    parser.add_argument('--use-wandb', action='store_true', default=False,
+                    help='Use wandb for logging')
+
     args = parser.parse_args()
 
-    wandb.init(
+    if args.use_wandb:
+        wandb.init(
             project="vit-performer",
             config={
                 "kernel_fn": args.kernel_fn,
                 "dataset": args.dataset,
+                "lr" : args.lr,
+                "epochs": args.epochs,
             }
         )   
     
@@ -123,14 +130,24 @@ def main():
             "transform": transforms.Compose([
                 transforms.ToTensor(),
                 transforms.Normalize((0.1307,), (0.3081,))
-            ])
+            ]),
+            "image_size": 28,
+            "patch_size": 7,
+            "num_classes": 10,
+            "model_depth": 8,
+            "model_dim": 512,
         },
         "CIFAR10": {
             "dataset": datasets.CIFAR10,
             "transform": transforms.Compose([
                 transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-            ])
+            ]),
+            "image_size": 32,
+            "patch_size": 8,
+            "num_classes": 10,
+            "model_depth": 8,
+            "model_dim": 256,
         },
         "ImageNet": {
             "dataset": datasets.ImageNet,
@@ -177,7 +194,7 @@ def main():
 
     performer = Performer(
         dim = 512,
-        depth = 8,
+        depth = dataset_info['model_depth'],
         heads = 8,
         causal = False,
         dim_head = 64,
@@ -185,26 +202,30 @@ def main():
     )
 
     model = ViT(
-        dim = 512,
-        image_size = 28,
-        patch_size = 7,
-        num_classes = 10,
+        dim = dataset_info['model_dim'],
+        image_size = dataset_info['image_size'],
+        patch_size = dataset_info['patch_size'],
+        num_classes = dataset_info['num_classes'],
         transformer = performer
     )
     
     model = model.to(device)
-    optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    # optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
+    optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
 
-    scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
+    # scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
+    scheduler = CosineAnnealingLR(optimizer, T_max=100)
+
     for epoch in range(1, args.epochs + 1):
         train(args, model, device, train_loader, optimizer, epoch)
-        test(model, device, test_loader)
+        test(args, model, device, test_loader)
         scheduler.step()
 
     if args.save_model:
         torch.save(model.state_dict(), "./models/mnist_vit_performer.pt")
 
-    wandb.finish()
+    if args.use_wandb:
+        wandb.finish()
 
 if __name__ == '__main__':
     main()

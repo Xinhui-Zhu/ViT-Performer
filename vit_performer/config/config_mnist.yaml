@@ -1,0 +1,45 @@
+# config_mnist.yaml
+
+# Model hyperparameters
+model:
+  image_size: 28
+  patch_size: 7
+  num_classes: 10
+  model_depth: 8
+  model_dim: 512
+  heads: 8
+  dim_head: 64
+
+# Training hyperparameters
+train:
+  batch_size: 64
+  test_batch_size: 1000
+  epochs: 14
+  lr: 1.0
+  gamma: 0.7
+  optimizer: "AdamW"  # Or use "Adadelta"
+  weight_decay: 0.01
+  scheduler: "CosineAnnealingLR"  # Options: "StepLR", "CosineAnnealingLR"
+  T_max: 100  # Only used if scheduler is CosineAnnealingLR
+
+# Dataset settings
+dataset:
+  name: "MNIST"
+  transform: 
+    - type: "ToTensor"
+    - type: "Normalize"
+      mean: [0.1307]
+      std: [0.3081]
+
+# Wandb configuration
+wandb:
+  project: "vit-performer"
+  use_wandb: true
+  log_interval: 10
+  dry_run: false
+
+# Device settings
+device:
+  no_cuda: false
+  no_mps: false
+  seed: 1
