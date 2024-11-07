@@ -11,7 +11,7 @@ model:
 
 # Training hyperparameters
 train:
-  batch_size: 128
+  batch_size: 64
   test_batch_size: 128
   epochs: 90
   lr: 0.001
@@ -25,6 +25,7 @@ train:
 # Dataset settings
 dataset:
   name: "Places365"
+  small: True
   transform: 
     - type: "Resize"
       size: [224, 224]

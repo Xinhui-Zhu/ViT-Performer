@@ -50,8 +50,8 @@ def main():
     
     dataset_class = getattr(datasets, dataset_name)
     if dataset_name=="Places365":
-        train_dataset = dataset_class('./data', split="train-standard", small=True, transform=transform)
-        test_dataset = dataset_class('./data', split="val", small=True, transform=transform)
+        train_dataset = dataset_class('./data', split="train-standard", small=config['dataset']['small'], transform=transform)
+        test_dataset = dataset_class('./data', split="val", small=config['dataset']['small'], transform=transform)
     else:
         train_dataset = dataset_class('./data', train=True, transform=transform)
         test_dataset = dataset_class('./data', train=False, transform=transform)
