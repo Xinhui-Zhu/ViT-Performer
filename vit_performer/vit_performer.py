@@ -79,6 +79,10 @@ def main():
         "Tanh": nn.Tanh(),
         "exp": torch.exp,
         "cos": torch.cos,
+        "Softplus": nn.Softplus(),
+        "LeakyReLU": nn.LeakyReLU(),
+        "GELU": nn.GELU(),
+        "ELU": nn.ELU(),
     }
     kernel_function = kernel_fn_dict.get(config['model'].get('kernel_fn', 'ReLU'))
 
