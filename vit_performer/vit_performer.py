@@ -12,6 +12,8 @@ import wandb
 import os
 from datasets import load_dataset  
 import PIL
+import time
+import math
 
 def load_config(config_file):
     with open(config_file, 'r') as file:
@@ -79,12 +81,12 @@ def main():
     kernel_function = kernel_fn_dict.get(config['model'].get('kernel_fn', 'ReLU'))
 
     if config['model'].get('use_performer', True):
+        print("Using ViT-Performer now...")
         performer = Performer(
             dim=config['model']['model_dim'],
             depth=config['model']['model_depth'],
             heads=config['model']['heads'],
             causal=False,
-            dim_head=config['model']['dim_head'],
             kernel_fn=kernel_function,
             emb_dropout = config['model']['dropout'],
             ff_dropout = config['model']['dropout'],
@@ -98,6 +100,7 @@ def main():
             transformer=performer
         )
     else:
+        print("Using normal ViT now...\n")
         model = vit_pytorch.ViT(
             image_size = config['model']['image_size'],
             patch_size = config['model']['patch_size'],
@@ -133,10 +136,15 @@ def main():
         raise ValueError("Unsupported scheduler specified in config")
 
     # Training loop
+    ttl_train_duration, ttl_test_duration = 0, 0
     for epoch in range(1, config['train']['epochs'] + 1):
-        train(config, model, device, train_loader, optimizer, epoch)
-        test(config, model, device, test_loader)
+        ttl_train_duration += train(config, model, device, train_loader, optimizer, epoch)
+        ttl_test_duration += test(config, model, device, test_loader)
         scheduler.step()
+
+    log_train_speed = math.log2(ttl_train_duration / len(train_loader.dataset) / epoch)
+    log_inference_speed = math.log2(ttl_test_duration / len(test_loader.dataset) / epoch)
+    print(f"Log_2(T) training speed: {log_train_speed:.2f} sec, inference speed: {log_inference_speed:.2f} sec")
 
     if config['train']['save_model']:
         if not os.path.exists("./models"):
@@ -148,6 +156,7 @@ def main():
 
 def train(config, model, device, train_loader, optimizer, epoch):
     model.train()
+    start_time = time.time()
     for batch_idx, batch in enumerate(train_loader):
         if "imagenet" in config['dataset']['name'].lower():
             target = batch['label'].clone().detach().long()
@@ -169,13 +178,19 @@ def train(config, model, device, train_loader, optimizer, epoch):
         if config['wandb']['use_wandb']:
             wandb.log({"train_loss": loss.item(), 
                        "learning_rate": optimizer.param_groups[0]['lr'],
-                       "epoch": epoch - 1 + batch_idx/len(train_loader.dataset)
+                       "epoch": epoch - 1 + batch_idx/len(train_loader.dataset),
                        })
+            
+    end_time = time.time()  
+    train_duration = end_time - start_time  
+    print(f'Epoch {epoch} | ', end="")
+    return train_duration
         
 def test(config, model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
+    start_time = time.time() 
     with torch.no_grad():
         for batch in test_loader:
             if "imagenet" in config['dataset']['name'].lower():
@@ -193,11 +208,18 @@ def test(config, model, device, test_loader):
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
 
+    end_time = time.time()  
+    test_duration = end_time - start_time 
+
     test_loss /= len(test_loader.dataset)
     accuracy = 100. * correct / len(test_loader.dataset)
     print(f'Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({accuracy:.0f}%)\n')
     if config['wandb']['use_wandb']:
-        wandb.log({"test_loss": test_loss, "test_accuracy": accuracy})
+        wandb.log({
+            "test_loss": test_loss,
+            "test_accuracy": accuracy,
+        })
+    return test_duration
 
 if __name__ == '__main__':
     main()
