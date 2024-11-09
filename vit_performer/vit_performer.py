@@ -89,6 +89,7 @@ def main():
             causal=False,
             generalized_attention=True,  # to trigger kernel use in https://github.com/lucidrains/performer-pytorch/blob/fc8b78441b1e27eb5d9b01fc738a8772cee07127/performer_pytorch/performer_pytorch.py#L263
             proj_type=config['model']['proj_type'],  # should be one of ['disabled', 'default', 'learnable']
+            auto_check_redraw=(config['model']['proj_type'] == 'default'),  # do not activate auto redraw if proj matrix is learned or disabled
             kernel_fn=kernel_function,
             emb_dropout = config['model']['dropout'],
             ff_dropout = config['model']['dropout'],
