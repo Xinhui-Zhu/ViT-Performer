@@ -7,7 +7,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 import vit_pytorch 
-from .performers import Performer
+from .performers import Performer  # hacked version, as we need to modify the code from performer_pytorch
 import wandb
 import os
 from datasets import load_dataset  
