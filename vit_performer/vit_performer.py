@@ -228,7 +228,7 @@ def test(config, model, device, test_loader):
     test_loss /= len(test_loader.dataset)
     test_frob_errs /= len(test_loader.dataset)
     accuracy = 100. * correct / len(test_loader.dataset)
-    print(f'Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({accuracy:.0f}%), Frob Error: {test_frob_errs:.4f}\n')
+    print(f'Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({accuracy:.0f}%)\n')
     if config['wandb']['use_wandb']:
         wandb.log({
             "test_loss": test_loss,
