@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
-import vit_pytorch 
+from vits import ViT as ViTHacked
 from .performers import Performer  # hacked version, as we need to modify the code from performer_pytorch
 import wandb
 import os
@@ -94,7 +94,7 @@ def main():
             ff_dropout = config['model']['dropout'],
             attn_dropout = config['model']['dropout'],
         )
-        model = vit_pytorch.efficient.ViT(
+        model = ViTHacked(
             dim=config['model']['model_dim'],
             image_size=config['model']['image_size'],
             patch_size=config['model']['patch_size'],
@@ -192,6 +192,7 @@ def test(config, model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
+    test_frob_errs = 0
     start_time = time.time() 
     with torch.no_grad():
         for batch in test_loader:
@@ -205,6 +206,10 @@ def test(config, model, device, test_loader):
             data, target = data.to(device), target.to(device)
             data = data.expand(-1, 3, -1, -1)
             output = model(data)
+            if isinstance(output, tuple):
+                output, frob_errs = output
+                # TODO: calc aggregated final mean Frobenius Error across layers of attn and across batch
+                # test_frob_errs += ...
             output = F.log_softmax(output, dim=1)
             test_loss += F.nll_loss(output, target, reduction='sum').item()
             pred = output.argmax(dim=1, keepdim=True)
@@ -214,11 +219,13 @@ def test(config, model, device, test_loader):
     test_duration = end_time - start_time 
 
     test_loss /= len(test_loader.dataset)
+    test_frob_errs /= len(test_loader.dataset)
     accuracy = 100. * correct / len(test_loader.dataset)
-    print(f'Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({accuracy:.0f}%)\n')
+    print(f'Test set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({accuracy:.0f}%), Frob Error: {test_frob_errs:.4f}\n')
     if config['wandb']['use_wandb']:
         wandb.log({
             "test_loss": test_loss,
+            "test_frob_errs": test_frob_errs,
             "test_accuracy": accuracy,
         })
     return test_duration
