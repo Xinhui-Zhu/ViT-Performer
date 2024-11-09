@@ -87,6 +87,7 @@ def main():
             depth=config['model']['model_depth'],
             heads=config['model']['heads'],
             causal=False,
+            generalized_attention=True,  # to trigger kernel use in https://github.com/lucidrains/performer-pytorch/blob/fc8b78441b1e27eb5d9b01fc738a8772cee07127/performer_pytorch/performer_pytorch.py#L263
             kernel_fn=kernel_function,
             emb_dropout = config['model']['dropout'],
             ff_dropout = config['model']['dropout'],
