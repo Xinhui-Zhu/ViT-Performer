@@ -14,7 +14,7 @@ model:
 train:
   batch_size: 512
   test_batch_size: 1000
-  epochs: 5
+  epochs: 500
   lr: 0.0001
   gamma: 0.7
   optimizer: "AdamW"
