@@ -1,5 +1,3 @@
-# 4540-Project-ViT
-
 ## Install
 ```
 conda create --name vit python=3.9
