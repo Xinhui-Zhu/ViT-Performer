@@ -4,23 +4,24 @@ model:
   image_size: 32
   patch_size: 4
   num_classes: 10
-  model_depth: 6
-  model_dim: 512
-  heads: 8
-  dropout: 0.1
+  model_depth: 4
+  model_dim: 256
+  mlp_dim: 256
+  heads: 4
+  dropout: 0.3
   kernel_fn: "ReLU"
 
 # Training hyperparameters
 train:
   batch_size: 512
   test_batch_size: 1000
-  epochs: 500
-  lr: 0.0001
+  epochs: 200
+  lr: 0.0005
   gamma: 0.7
   optimizer: "AdamW"
   weight_decay: 0.1
   scheduler: "CosineAnnealingLR"
-  T_max: 500
+  T_max: 200
   save_model: True
 
 # Dataset settings

@@ -108,7 +108,7 @@ def main():
             dim = config['model']['model_dim'],
             depth = config['model']['model_depth'],
             heads = config['model']['heads'],
-            mlp_dim = config['model']['model_dim']*4,
+            mlp_dim = config['model']['mlp_dim'],
             dropout = config['model']['dropout'],
             emb_dropout = config['model']['dropout'],
         )

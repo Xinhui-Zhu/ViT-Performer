@@ -19,4 +19,5 @@ python vit_performer.py --config config/config_imagenet.yaml
 ## Thanks To
 
 https://github.com/kentaroy47/vision-transformers-cifar10
+https://github.com/s-chh/PyTorch-Scratch-Vision-Transformer-ViT
 
