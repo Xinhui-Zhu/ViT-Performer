@@ -77,6 +77,8 @@ def main():
         "ReLU": nn.ReLU(),
         "Sigmoid": nn.Sigmoid(),
         "Tanh": nn.Tanh(),
+        "exp": torch.exp,
+        "cos": torch.cos,
     }
     kernel_function = kernel_fn_dict.get(config['model'].get('kernel_fn', 'ReLU'))
 
