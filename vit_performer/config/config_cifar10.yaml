@@ -10,6 +10,7 @@ model:
   heads: 4
   dropout: 0.3
   kernel_fn: "ReLU"
+  proj_type: "default"  # TODO: change this!
 
 # Training hyperparameters
 train:
