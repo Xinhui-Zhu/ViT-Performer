@@ -10,6 +10,7 @@ model:
   dim_head: 64
   dropout: 0.1
   kernel_fn: "ReLU"
+  proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
 
 # Training hyperparameters
 train:
