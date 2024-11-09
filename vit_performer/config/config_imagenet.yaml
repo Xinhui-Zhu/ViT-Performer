@@ -1,5 +1,6 @@
 # Model hyperparameters
 model:
+  use_performer: True
   image_size: 224
   patch_size: 16
   num_classes: 1000
@@ -7,6 +8,7 @@ model:
   model_dim: 768
   heads: 12
   dim_head: 64
+  dropout: 0.1
   kernel_fn: "ReLU"
 
 # Training hyperparameters
@@ -24,7 +26,7 @@ train:
 
 # Dataset settings
 dataset:
-  name: "ImageNet"
+  name: "GATE-engine/mini_imagenet"
   transform: 
     - type: "Resize"
       size: [224, 224]

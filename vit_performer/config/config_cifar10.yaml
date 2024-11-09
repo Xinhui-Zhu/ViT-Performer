@@ -1,25 +1,27 @@
 # Model hyperparameters
 model:
+  use_performer: False
   image_size: 32
-  patch_size: 8
+  patch_size: 4
   num_classes: 10
-  model_depth: 8
-  model_dim: 256
-  heads: 8
+  model_depth: 4
+  model_dim: 128
+  heads: 4
   dim_head: 64
+  dropout: 0.3
   kernel_fn: "ReLU"
 
 # Training hyperparameters
 train:
-  batch_size: 128
+  batch_size: 256
   test_batch_size: 1000
-  epochs: 50
-  lr: 0.001
+  epochs: 500
+  lr: 0.0005
   gamma: 0.7
   optimizer: "AdamW"
-  weight_decay: 0.01
+  weight_decay: 0.1
   scheduler: "CosineAnnealingLR"
-  T_max: 100
+  T_max: 500
   save_model: True
 
 # Dataset settings

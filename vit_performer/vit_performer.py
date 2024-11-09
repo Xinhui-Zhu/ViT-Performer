@@ -6,10 +6,12 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
-from vit_pytorch.efficient import ViT
+import vit_pytorch 
 from performer_pytorch import Performer
 import wandb
 import os
+from datasets import load_dataset  
+import PIL
 
 def load_config(config_file):
     with open(config_file, 'r') as file:
@@ -32,11 +34,12 @@ def main():
             config=config
         )
 
-    # Set up device
+    # Set up device for multi-GPU support
     use_cuda = not config['device']['no_cuda'] and torch.cuda.is_available()
     use_mps = not config['device']['no_mps'] and torch.backends.mps.is_available()
     torch.manual_seed(config['device']['seed'])
     device = torch.device("cuda" if use_cuda else "mps" if use_mps else "cpu")
+    device_ids = list(range(torch.cuda.device_count())) if use_cuda else None
 
     # Set up dataset and data loaders
     dataset_name = config['dataset']['name']
@@ -48,13 +51,21 @@ def main():
             transform_list.append(transforms.Normalize(mean=t['mean'], std=t['std']))
     transform = transforms.Compose(transform_list)
     
-    dataset_class = getattr(datasets, dataset_name)
-    if dataset_name=="Places365":
-        train_dataset = dataset_class('./data', split="train-standard", small=config['dataset']['small'], transform=transform)
-        test_dataset = dataset_class('./data', split="val", small=config['dataset']['small'], transform=transform)
+    if "imagenet" in dataset_name.lower():
+        dataset = load_dataset(dataset_name, cache_dir='./data')
+        def apply_transform(batch):
+            batch['image'] = [transform(image.convert("RGB")) for image in batch['image']]
+            return batch
+        train_dataset = dataset['train'].map(apply_transform, batched=True)
+        test_dataset = dataset['test'].map(apply_transform, batched=True)
     else:
-        train_dataset = dataset_class('./data', train=True, transform=transform)
-        test_dataset = dataset_class('./data', train=False, transform=transform)
+        dataset_class = getattr(datasets, dataset_name)
+        if dataset_name == "Places365":
+            train_dataset = dataset_class('./data', split="train-standard", small=config['dataset']['small'], transform=transform)
+            test_dataset = dataset_class('./data', split="val", small=config['dataset']['small'], transform=transform)
+        else:
+            train_dataset = dataset_class('./data', train=True, transform=transform)
+            test_dataset = dataset_class('./data', train=False, transform=transform)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config['train']['batch_size'], shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=config['train']['test_batch_size'], shuffle=False)
@@ -66,22 +77,45 @@ def main():
         "Tanh": nn.Tanh(),
     }
     kernel_function = kernel_fn_dict.get(config['model'].get('kernel_fn', 'ReLU'))
-    performer = Performer(
-        dim=config['model']['model_dim'],
-        depth=config['model']['model_depth'],
-        heads=config['model']['heads'],
-        causal=False,
-        dim_head=config['model']['dim_head'],
-        kernel_fn=kernel_function
-    )
-    model = ViT(
-        dim=config['model']['model_dim'],
-        image_size=config['model']['image_size'],
-        patch_size=config['model']['patch_size'],
-        num_classes=config['model']['num_classes'],
-        transformer=performer
-    )
+
+    if config['model'].get('use_performer', True):
+        performer = Performer(
+            dim=config['model']['model_dim'],
+            depth=config['model']['model_depth'],
+            heads=config['model']['heads'],
+            causal=False,
+            dim_head=config['model']['dim_head'],
+            kernel_fn=kernel_function,
+            emb_dropout = config['model']['dropout'],
+            ff_dropout = config['model']['dropout'],
+            attn_dropout = config['model']['dropout'],
+        )
+        model = vit_pytorch.efficient.ViT(
+            dim=config['model']['model_dim'],
+            image_size=config['model']['image_size'],
+            patch_size=config['model']['patch_size'],
+            num_classes=config['model']['num_classes'],
+            transformer=performer
+        )
+    else:
+        model = vit_pytorch.ViT(
+            image_size = config['model']['image_size'],
+            patch_size = config['model']['patch_size'],
+            num_classes = config['model']['num_classes'],
+            dim = config['model']['model_dim'],
+            depth = config['model']['model_depth'],
+            heads = config['model']['heads'],
+            mlp_dim = config['model']['model_dim']*4,
+            dropout = config['model']['dropout'],
+            emb_dropout = config['model']['dropout'],
+        )
+
+    # Move model to device
     model = model.to(device)
+
+    # Wrap model in DataParallel if multiple GPUs are available
+    if use_cuda and torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model, device_ids=device_ids)
 
     # Optimizer and Scheduler
     if config['train']['optimizer'] == "AdamW":
@@ -114,9 +148,16 @@ def main():
 
 def train(config, model, device, train_loader, optimizer, epoch):
     model.train()
-    for batch_idx, (data, target) in enumerate(train_loader):
+    for batch_idx, batch in enumerate(train_loader):
+        if "imagenet" in config['dataset']['name'].lower():
+            target = batch['label'].clone().detach().long()
+            data = batch['image']
+            data = torch.stack([torch.stack([torch.stack([x.clone().detach() for x in row]) for row in channel]) for channel in data])
+            data = data.permute(3, 0, 1, 2).float()    
+        else:
+            data, target = batch
         data, target = data.to(device), target.to(device)
-        data = data.expand(-1, 3, -1, -1)
+        data = data.expand(-1, 3, -1, -1)  # Ensure data is 3-channel for ViT model
         optimizer.zero_grad()
         output = model(data)
         output = F.log_softmax(output, dim=1)
@@ -126,14 +167,24 @@ def train(config, model, device, train_loader, optimizer, epoch):
         
         # Log loss to wandb
         if config['wandb']['use_wandb']:
-            wandb.log({"train_loss": loss.item(), "epoch": epoch})
-
+            wandb.log({"train_loss": loss.item(), 
+                       "learning_rate": optimizer.param_groups[0]['lr'],
+                       "epoch": epoch - 1 + batch_idx/len(train_loader.dataset)
+                       })
+        
 def test(config, model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
     with torch.no_grad():
-        for data, target in test_loader:
+        for batch in test_loader:
+            if "imagenet" in config['dataset']['name'].lower():
+                target = batch['label'].clone().detach().long()
+                data = batch['image']
+                data = torch.stack([torch.stack([torch.stack([x.clone().detach() for x in row]) for row in channel]) for channel in data])
+                data = data.permute(3, 0, 1, 2).float()  
+            else:
+                data, target = batch
             data, target = data.to(device), target.to(device)
             data = data.expand(-1, 3, -1, -1)
             output = model(data)

@@ -1,5 +1,6 @@
 # Model hyperparameters
 model:
+  use_performer: True
   image_size: 256
   patch_size: 16
   num_classes: 365
@@ -7,11 +8,12 @@ model:
   model_dim: 768
   heads: 12
   dim_head: 64
+  dropout: 0.1
   kernel_fn: "ReLU"
 
 # Training hyperparameters
 train:
-  batch_size: 64
+  batch_size: 256
   test_batch_size: 128
   epochs: 90
   lr: 0.001
