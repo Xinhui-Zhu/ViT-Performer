@@ -6,8 +6,9 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
+import vit_pytorch 
 from vits import ViT as ViTHacked
-from .performers import Performer  # hacked version, as we need to modify the code from performer_pytorch
+from performers import Performer  # hacked version, as we need to modify the code from performer_pytorch
 import wandb
 import os
 from datasets import load_dataset  
@@ -92,12 +93,12 @@ def main():
             dim=config['model']['model_dim'],
             depth=config['model']['model_depth'],
             heads=config['model']['heads'],
+            dim_head=config['model']['dim_head'],
             causal=False,
             generalized_attention=True,  # to trigger kernel use in https://github.com/lucidrains/performer-pytorch/blob/fc8b78441b1e27eb5d9b01fc738a8772cee07127/performer_pytorch/performer_pytorch.py#L263
             proj_type=config['model']['proj_type'],  # should be one of ['disabled', 'default', 'learnable']
             auto_check_redraw=(config['model']['proj_type'] == 'default'),  # do not activate auto redraw if proj matrix is learned or disabled
             kernel_fn=kernel_function,
-            emb_dropout = config['model']['dropout'],
             ff_dropout = config['model']['dropout'],
             attn_dropout = config['model']['dropout'],
         )

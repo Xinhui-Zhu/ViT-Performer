@@ -1,11 +1,12 @@
 # Model hyperparameters
 model:
-  use_performer: False
+  use_performer: True
   image_size: 32
   patch_size: 4
   num_classes: 10
   model_depth: 4
-  model_dim: 256
+  model_dim: 128
+  dim_head: 64
   mlp_dim: 256
   heads: 4
   dropout: 0.3
