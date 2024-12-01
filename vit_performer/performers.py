@@ -1,5 +1,5 @@
 # Modified from https://github.com/lucidrains/performer-pytorch/blob/main/performer_pytorch/performer_pytorch.py
-
+import torch.distributed as dist
 import math
 import torch
 import torch.nn.functional as F
@@ -43,7 +43,10 @@ def cast_tuple(val):
     return (val,) if not isinstance(val, tuple) else val
 
 def get_module_device(module):
-    return next(module.parameters()).device
+    try:
+        return next(module.parameters()).device
+    except StopIteration:
+        return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def find_modules(nn_module, type):
     return [module for module in nn_module.modules() if isinstance(module, type)]
@@ -300,6 +303,9 @@ class ProjectionUpdater(nn.Module):
 
         if not self.training:
             return
+        
+        if dist.is_initialized():
+            dist.barrier()
 
         if exists(self.feature_redraw_interval) and self.calls_since_last_redraw >= self.feature_redraw_interval:
             device = get_module_device(model)
