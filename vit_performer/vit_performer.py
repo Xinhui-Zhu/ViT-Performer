@@ -16,6 +16,59 @@ import PIL
 import time
 import math
 
+class LearnableExp1(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.alpha = nn.Parameter(torch.ones(1))
+            self.beta = nn.Parameter(torch.zeros(1))
+
+        def forward(self, x):
+            return torch.exp(self.alpha * x + self.beta)
+
+
+class LearnableExp2(nn.Module):
+        def __init__(self, dim, hidden_dim=None):
+            super().__init__()
+            self.hidden_dim = hidden_dim or dim * 2
+
+            self.linear1 = None
+
+        def forward(self, x):
+            if self.linear1 is None:
+                input_dim = x.shape[-1]
+                self.linear1 = nn.Linear(input_dim, input_dim).to(x.device)
+            x = self.linear1(x)
+            x = torch.exp(x)
+            return x
+
+class LearnableReLU1(nn.Module):
+        def __init__(self, negative_slope_init=0.01):
+            super(LearnableReLU1, self).__init__()
+            #
+            self.alpha = nn.Parameter(torch.tensor(1.0))
+            self.beta = nn.Parameter(torch.tensor(0.0))
+
+
+        def forward(self, x):
+            #print(self.alpha)
+            return torch.maximum(self.alpha*x+self.beta, torch.tensor(0.0, device=x.device))
+
+class LearnableReLU2(nn.Module):
+        def __init__(self, dim, hidden_dim=None):
+            super().__init__()
+            self.hidden_dim = hidden_dim or dim * 2
+
+            self.linear1 = None
+            self.linear2 = None
+
+        def forward(self, x):
+            if self.linear1 is None:
+                input_dim = x.shape[-1]
+                self.linear1 = nn.Linear(input_dim, input_dim).to(x.device)
+            x = self.linear1(x)
+            x = F.relu(x)
+            return x
+
 def load_config(config_file):
     with open(config_file, 'r') as file:
         config = yaml.safe_load(file)
@@ -85,15 +138,19 @@ def main():
         "LeakyReLU": nn.LeakyReLU(),
         "GELU": nn.GELU(),
         "ELU": nn.ELU(),
-        "Softmax": nn.Softmax()
+        "Softmax": nn.Softmax(),
+        "LearnableReLU1":LearnableReLU1(),
+        "LearnableReLU2":LearnableReLU2((config['model']['dim_head'])),
+        "LearnableExp1":LearnableExp1(),
+        "LearnableExp2":LearnableExp2((config['model']['dim_head']))
     }
     
     kernel_function = kernel_fn_dict.get(config['model'].get('kernel_fn', 'Softmax'))
 
     if config['model'].get('use_performer', True):
-        print("Using ViT-Performer now...")
         print(f"Using {config['model']['kernel_fn']}-Performer now...")
-        if config['model'].get('kernel_fn', "Softmax"):
+        print(f"Random feature number: {config['model']['random_features']}")
+        if config['model'].get('kernel_fn') == "Softmax":
             performer = Performer(
                 dim=config['model']['model_dim'],
                 depth=config['model']['model_depth'],
@@ -165,11 +222,12 @@ def main():
             transformer=performer
         )
 
-    print("Printing out the model structure:")
-    print("Note: The model structure may appear repeated inside 'proj_updater'.")
-    print("This is intentional and does not affect the model's functionality or computational complexity.")
-    print("The repeated structure is for managing projection updates and is only a reference to previous structure.")
-    print(model)
+    if config['model'].get("print_model", True):
+        print("Printing out the model structure:")
+        print("Note: The model structure may appear repeated inside 'proj_updater'.")
+        print("This is intentional and does not affect the model's functionality or computational complexity.")
+        print("The repeated structure is for managing projection updates and is only a reference to previous structure.")
+        print(model)
     
     # Move model to device
     model = model.to(device)
@@ -200,9 +258,18 @@ def main():
         ttl_test_duration += test(config, model, device, test_loader, epoch, config['model'].get('use_performer', True))
         scheduler.step()
 
+    train_duration_per_epoch = ttl_train_duration / epoch
+    test_duration_per_epoch = ttl_test_duration / epoch
     log_train_speed = math.log2(ttl_train_duration / len(train_loader.dataset) / epoch)
     log_inference_speed = math.log2(ttl_test_duration / len(test_loader.dataset) / epoch)
-    print(f"Log_2(T) training speed: {log_train_speed:.2f} sec, inference speed: {log_inference_speed:.2f} sec")
+    print("*************************************")
+    print(f"Train loader dataset length: {len(train_loader.dataset)}")
+    print(f"Test loader dataset length: {len(test_loader.dataset)}")
+    print(f"Log_2(T) training speed: {log_train_speed:.2f} S")
+    print(f"Log_2(T) inference speed: {log_inference_speed:.2f} S")
+    print(f"Avg training speed per epoch: {train_duration_per_epoch:.2f} S")
+    print(f"Avg testing speed per cycle: {test_duration_per_epoch:.2f} S")
+    print("*************************************")
 
     if config['train']['save_model']:
         if not os.path.exists("./models"):

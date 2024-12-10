@@ -1,6 +1,7 @@
 # Model hyperparameters
 model:
   use_performer: True
+  print_model: False
   image_size: 32
   patch_size: 4
   num_classes: 10
@@ -12,7 +13,7 @@ model:
   kernel_fn: "Softmax" # ReLU Softmax
   proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
   redraw_interval: 2500
-  random_features: 16
+  random_features: 32
   feedforward_dim_multiplier: 2
 
 # Training hyperparameters

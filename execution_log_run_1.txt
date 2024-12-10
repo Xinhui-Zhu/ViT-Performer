@@ -1,0 +1,477 @@
+Running command 1: C:/Users/xxiao/.conda/envs/vit/python.exe c:/Users/xxiao/Downloads/Xiao/ViT-Performer/vit_performer/vit_performer.py --config c:/Users/xxiao/Downloads/Xiao/ViT-Performer/vit_performer/config/config_cifar10_softmax_4.yaml
+================================================================================
+Output:
+Files already downloaded and verified
+Using Softmax-Performer now...
+Random feature number: 4
+Epoch 1 | Test set: Average loss: 1.4805, Accuracy: 4658/10000 (47%)
+
+Epoch 2 | Test set: Average loss: 1.3390, Accuracy: 5202/10000 (52%)
+
+Epoch 3 | Test set: Average loss: 1.3114, Accuracy: 5266/10000 (53%)
+
+Epoch 4 | Test set: Average loss: 1.2977, Accuracy: 5300/10000 (53%)
+
+Epoch 5 | Test set: Average loss: 1.2778, Accuracy: 5338/10000 (53%)
+
+Epoch 6 | Test set: Average loss: 1.2939, Accuracy: 5252/10000 (53%)
+
+Epoch 7 | Test set: Average loss: 1.2817, Accuracy: 5416/10000 (54%)
+
+Epoch 8 | Test set: Average loss: 1.2551, Accuracy: 5483/10000 (55%)
+
+Epoch 9 | Test set: Average loss: 1.2224, Accuracy: 5541/10000 (55%)
+
+Epoch 10 | Test set: Average loss: 1.2876, Accuracy: 5282/10000 (53%)
+
+Epoch 11 | Test set: Average loss: 1.3841, Accuracy: 4923/10000 (49%)
+
+Epoch 12 | Test set: Average loss: 1.3192, Accuracy: 5180/10000 (52%)
+
+Epoch 13 | Test set: Average loss: 1.3018, Accuracy: 5323/10000 (53%)
+
+Epoch 14 | Test set: Average loss: 1.1492, Accuracy: 5835/10000 (58%)
+
+Epoch 15 | Test set: Average loss: 1.1023, Accuracy: 6000/10000 (60%)
+
+Epoch 16 | Test set: Average loss: 1.0750, Accuracy: 6189/10000 (62%)
+
+Epoch 17 | Test set: Average loss: 1.0608, Accuracy: 6267/10000 (63%)
+
+Epoch 18 | Test set: Average loss: 1.0276, Accuracy: 6396/10000 (64%)
+
+Epoch 19 | Test set: Average loss: 1.1097, Accuracy: 5959/10000 (60%)
+
+Epoch 20 | Test set: Average loss: 1.1045, Accuracy: 6071/10000 (61%)
+
+Epoch 21 | Test set: Average loss: 1.0816, Accuracy: 6137/10000 (61%)
+
+Epoch 22 | Test set: Average loss: 1.0158, Accuracy: 6308/10000 (63%)
+
+Epoch 23 | Test set: Average loss: 1.1349, Accuracy: 6063/10000 (61%)
+
+Epoch 24 | Test set: Average loss: 1.0169, Accuracy: 6420/10000 (64%)
+
+Epoch 25 | Test set: Average loss: 0.9657, Accuracy: 6640/10000 (66%)
+
+Epoch 26 | Test set: Average loss: 0.9693, Accuracy: 6561/10000 (66%)
+
+Epoch 27 | Test set: Average loss: 0.9485, Accuracy: 6649/10000 (66%)
+
+Epoch 28 | Test set: Average loss: 0.9925, Accuracy: 6494/10000 (65%)
+
+Epoch 29 | Test set: Average loss: 0.9061, Accuracy: 6837/10000 (68%)
+
+Epoch 30 | Test set: Average loss: 0.9015, Accuracy: 6844/10000 (68%)
+
+Epoch 31 | Test set: Average loss: 0.8999, Accuracy: 6889/10000 (69%)
+
+Epoch 32 | Test set: Average loss: 0.9070, Accuracy: 6874/10000 (69%)
+
+Epoch 33 | Test set: Average loss: 0.9162, Accuracy: 6905/10000 (69%)
+
+Epoch 34 | Test set: Average loss: 0.9277, Accuracy: 6899/10000 (69%)
+
+Epoch 35 | Test set: Average loss: 0.9410, Accuracy: 6840/10000 (68%)
+
+Epoch 36 | Test set: Average loss: 0.9318, Accuracy: 6907/10000 (69%)
+
+Epoch 37 | Test set: Average loss: 0.9315, Accuracy: 6914/10000 (69%)
+
+Epoch 38 | Test set: Average loss: 0.9850, Accuracy: 6814/10000 (68%)
+
+Epoch 39 | Test set: Average loss: 0.9176, Accuracy: 6909/10000 (69%)
+
+Epoch 40 | Test set: Average loss: 0.9195, Accuracy: 6976/10000 (70%)
+
+Epoch 41 | Test set: Average loss: 0.9003, Accuracy: 7031/10000 (70%)
+
+Epoch 42 | Test set: Average loss: 0.8715, Accuracy: 7136/10000 (71%)
+
+Epoch 43 | Test set: Average loss: 0.9216, Accuracy: 6961/10000 (70%)
+
+Epoch 44 | Test set: Average loss: 0.9169, Accuracy: 7048/10000 (70%)
+
+Epoch 45 | Test set: Average loss: 0.9482, Accuracy: 7026/10000 (70%)
+
+Epoch 46 | Test set: Average loss: 0.9447, Accuracy: 7072/10000 (71%)
+
+Epoch 47 | Test set: Average loss: 0.9880, Accuracy: 6964/10000 (70%)
+
+Epoch 48 | Test set: Average loss: 0.9967, Accuracy: 7046/10000 (70%)
+
+Epoch 49 | Test set: Average loss: 0.9964, Accuracy: 6980/10000 (70%)
+
+Epoch 50 | Test set: Average loss: 1.0155, Accuracy: 7039/10000 (70%)
+
+Epoch 51 | Test set: Average loss: 1.0106, Accuracy: 7015/10000 (70%)
+
+Epoch 52 | Test set: Average loss: 0.9251, Accuracy: 7104/10000 (71%)
+
+Epoch 53 | Test set: Average loss: 0.9334, Accuracy: 7081/10000 (71%)
+
+Epoch 54 | Test set: Average loss: 0.9387, Accuracy: 7191/10000 (72%)
+
+Epoch 55 | Test set: Average loss: 0.9813, Accuracy: 7112/10000 (71%)
+
+Epoch 56 | Test set: Average loss: 0.9974, Accuracy: 7084/10000 (71%)
+
+Epoch 57 | Test set: Average loss: 1.0639, Accuracy: 6966/10000 (70%)
+
+Epoch 58 | Test set: Average loss: 1.0776, Accuracy: 7020/10000 (70%)
+
+Epoch 59 | Test set: Average loss: 1.0585, Accuracy: 7104/10000 (71%)
+
+Epoch 60 | Test set: Average loss: 1.0712, Accuracy: 7075/10000 (71%)
+
+Epoch 61 | Test set: Average loss: 1.0914, Accuracy: 7090/10000 (71%)
+
+Epoch 62 | Test set: Average loss: 1.1500, Accuracy: 7074/10000 (71%)
+
+Epoch 63 | Test set: Average loss: 1.1042, Accuracy: 7050/10000 (70%)
+
+Epoch 64 | Test set: Average loss: 0.9380, Accuracy: 6914/10000 (69%)
+
+Epoch 65 | Test set: Average loss: 0.9778, Accuracy: 7193/10000 (72%)
+
+Epoch 66 | Test set: Average loss: 1.0288, Accuracy: 7161/10000 (72%)
+
+Epoch 67 | Test set: Average loss: 1.0520, Accuracy: 7103/10000 (71%)
+
+Epoch 68 | Test set: Average loss: 1.0600, Accuracy: 7181/10000 (72%)
+
+Epoch 69 | Test set: Average loss: 1.1139, Accuracy: 7136/10000 (71%)
+
+Epoch 70 | Test set: Average loss: 1.0986, Accuracy: 7158/10000 (72%)
+
+Epoch 71 | Test set: Average loss: 1.1377, Accuracy: 7120/10000 (71%)
+
+Epoch 72 | Test set: Average loss: 1.1700, Accuracy: 7112/10000 (71%)
+
+Epoch 73 | Test set: Average loss: 1.1807, Accuracy: 7069/10000 (71%)
+
+Epoch 74 | Test set: Average loss: 1.1785, Accuracy: 7127/10000 (71%)
+
+Epoch 75 | Test set: Average loss: 1.2348, Accuracy: 7099/10000 (71%)
+
+Epoch 76 | Test set: Average loss: 1.2425, Accuracy: 7061/10000 (71%)
+
+Epoch 77 | Test set: Average loss: 0.9447, Accuracy: 7081/10000 (71%)
+
+Epoch 78 | Test set: Average loss: 0.9688, Accuracy: 7142/10000 (71%)
+
+Epoch 79 | Test set: Average loss: 0.9925, Accuracy: 7209/10000 (72%)
+
+Epoch 80 | Test set: Average loss: 1.0702, Accuracy: 7131/10000 (71%)
+
+Epoch 81 | Test set: Average loss: 1.1048, Accuracy: 7200/10000 (72%)
+
+Epoch 82 | Test set: Average loss: 1.1193, Accuracy: 7200/10000 (72%)
+
+Epoch 83 | Test set: Average loss: 1.1421, Accuracy: 7186/10000 (72%)
+
+Epoch 84 | Test set: Average loss: 1.1462, Accuracy: 7226/10000 (72%)
+
+Epoch 85 | Test set: Average loss: 1.2117, Accuracy: 7129/10000 (71%)
+
+Epoch 86 | Test set: Average loss: 1.2214, Accuracy: 7149/10000 (71%)
+
+Epoch 87 | Test set: Average loss: 1.2543, Accuracy: 7163/10000 (72%)
+
+Epoch 88 | Test set: Average loss: 1.2319, Accuracy: 7193/10000 (72%)
+
+Epoch 89 | Test set: Average loss: 1.2737, Accuracy: 7077/10000 (71%)
+
+Epoch 90 | Test set: Average loss: 1.0570, Accuracy: 7221/10000 (72%)
+
+Epoch 91 | Test set: Average loss: 1.1061, Accuracy: 7243/10000 (72%)
+
+Epoch 92 | Test set: Average loss: 1.1674, Accuracy: 7195/10000 (72%)
+
+Epoch 93 | Test set: Average loss: 1.2180, Accuracy: 7174/10000 (72%)
+
+Epoch 94 | Test set: Average loss: 1.2103, Accuracy: 7188/10000 (72%)
+
+Epoch 95 | Test set: Average loss: 1.2234, Accuracy: 7202/10000 (72%)
+
+Epoch 96 | Test set: Average loss: 1.3131, Accuracy: 7143/10000 (71%)
+
+Epoch 97 | Test set: Average loss: 1.3365, Accuracy: 7153/10000 (72%)
+
+Epoch 98 | Test set: Average loss: 1.2979, Accuracy: 7194/10000 (72%)
+
+Epoch 99 | Test set: Average loss: 1.3440, Accuracy: 7206/10000 (72%)
+
+Epoch 100 | Test set: Average loss: 1.3473, Accuracy: 7150/10000 (72%)
+
+*************************************
+Log_2(T) training speed: -12.45 S
+Log_2(T) inference speed: -13.01 S
+Avg training speed per epoch: 8.95 S
+Avg testing speed per cycle: 1.22 S
+*************************************
+
+Errors, warnings, messages:
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: xxiaowb (xxiaowb-columbia-university). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.7
+wandb: Run data is saved locally in C:\Users\xxiao\Downloads\Xiao\ViT-Performer\wandb\run-20241206_060203-uqdht9fw
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run avid-dew-74
+wandb:  View project at https://wandb.ai/xxiaowb-columbia-university/vit-performer
+wandb:  View run at https://wandb.ai/xxiaowb-columbia-university/vit-performer/runs/uqdht9fw
+wandb:                                                                                
+wandb: 
+wandb: Run summary:
+wandb:         epoch 99.0039
+wandb: learning_rate 0.00025
+wandb: test_accuracy 71.5
+wandb:     test_loss 1.34727
+wandb:    train_loss 0.18625
+wandb: 
+wandb:  View run avid-dew-74 at: https://wandb.ai/xxiaowb-columbia-university/vit-performer/runs/uqdht9fw
+wandb:  View project at: https://wandb.ai/xxiaowb-columbia-university/vit-performer
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: .\wandb\run-20241206_060203-uqdht9fw\logs
+
+Exit code: 0
+================================================================================
+
+Running command 2: C:/Users/xxiao/.conda/envs/vit/python.exe c:/Users/xxiao/Downloads/Xiao/ViT-Performer/vit_performer/vit_performer.py --config c:/Users/xxiao/Downloads/Xiao/ViT-Performer/vit_performer/config/config_cifar10_trans.yaml
+================================================================================
+Output:
+Files already downloaded and verified
+Using ViT-Transformer now...
+Epoch 1 | Test set: Average loss: 1.5906, Accuracy: 4246/10000 (42%)
+
+Epoch 2 | Test set: Average loss: 1.3674, Accuracy: 5051/10000 (51%)
+
+Epoch 3 | Test set: Average loss: 1.2761, Accuracy: 5417/10000 (54%)
+
+Epoch 4 | Test set: Average loss: 1.1908, Accuracy: 5745/10000 (57%)
+
+Epoch 5 | Test set: Average loss: 1.1344, Accuracy: 5931/10000 (59%)
+
+Epoch 6 | Test set: Average loss: 1.1378, Accuracy: 5925/10000 (59%)
+
+Epoch 7 | Test set: Average loss: 1.0767, Accuracy: 6162/10000 (62%)
+
+Epoch 8 | Test set: Average loss: 1.0455, Accuracy: 6338/10000 (63%)
+
+Epoch 9 | Test set: Average loss: 1.0454, Accuracy: 6350/10000 (64%)
+
+Epoch 10 | Test set: Average loss: 1.0182, Accuracy: 6416/10000 (64%)
+
+Epoch 11 | Test set: Average loss: 1.0175, Accuracy: 6524/10000 (65%)
+
+Epoch 12 | Test set: Average loss: 1.0349, Accuracy: 6492/10000 (65%)
+
+Epoch 13 | Test set: Average loss: 1.0127, Accuracy: 6534/10000 (65%)
+
+Epoch 14 | Test set: Average loss: 1.0088, Accuracy: 6598/10000 (66%)
+
+Epoch 15 | Test set: Average loss: 1.0237, Accuracy: 6615/10000 (66%)
+
+Epoch 16 | Test set: Average loss: 1.0408, Accuracy: 6597/10000 (66%)
+
+Epoch 17 | Test set: Average loss: 1.1113, Accuracy: 6538/10000 (65%)
+
+Epoch 18 | Test set: Average loss: 1.1121, Accuracy: 6567/10000 (66%)
+
+Epoch 19 | Test set: Average loss: 1.1651, Accuracy: 6476/10000 (65%)
+
+Epoch 20 | Test set: Average loss: 1.1474, Accuracy: 6588/10000 (66%)
+
+Epoch 21 | Test set: Average loss: 1.1673, Accuracy: 6616/10000 (66%)
+
+Epoch 22 | Test set: Average loss: 1.2099, Accuracy: 6533/10000 (65%)
+
+Epoch 23 | Test set: Average loss: 1.2450, Accuracy: 6522/10000 (65%)
+
+Epoch 24 | Test set: Average loss: 1.2737, Accuracy: 6563/10000 (66%)
+
+Epoch 25 | Test set: Average loss: 1.2852, Accuracy: 6566/10000 (66%)
+
+Epoch 26 | Test set: Average loss: 1.3422, Accuracy: 6486/10000 (65%)
+
+Epoch 27 | Test set: Average loss: 1.3915, Accuracy: 6581/10000 (66%)
+
+Epoch 28 | Test set: Average loss: 1.4065, Accuracy: 6479/10000 (65%)
+
+Epoch 29 | Test set: Average loss: 1.4373, Accuracy: 6514/10000 (65%)
+
+Epoch 30 | Test set: Average loss: 1.5048, Accuracy: 6470/10000 (65%)
+
+Epoch 31 | Test set: Average loss: 1.5813, Accuracy: 6458/10000 (65%)
+
+Epoch 32 | Test set: Average loss: 1.5074, Accuracy: 6447/10000 (64%)
+
+Epoch 33 | Test set: Average loss: 1.6799, Accuracy: 6434/10000 (64%)
+
+Epoch 34 | Test set: Average loss: 1.6260, Accuracy: 6479/10000 (65%)
+
+Epoch 35 | Test set: Average loss: 1.7035, Accuracy: 6437/10000 (64%)
+
+Epoch 36 | Test set: Average loss: 1.6335, Accuracy: 6488/10000 (65%)
+
+Epoch 37 | Test set: Average loss: 1.7134, Accuracy: 6407/10000 (64%)
+
+Epoch 38 | Test set: Average loss: 1.7845, Accuracy: 6409/10000 (64%)
+
+Epoch 39 | Test set: Average loss: 1.7612, Accuracy: 6415/10000 (64%)
+
+Epoch 40 | Test set: Average loss: 1.7530, Accuracy: 6432/10000 (64%)
+
+Epoch 41 | Test set: Average loss: 1.8354, Accuracy: 6421/10000 (64%)
+
+Epoch 42 | Test set: Average loss: 1.7771, Accuracy: 6494/10000 (65%)
+
+Epoch 43 | Test set: Average loss: 1.8305, Accuracy: 6462/10000 (65%)
+
+Epoch 44 | Test set: Average loss: 1.8676, Accuracy: 6464/10000 (65%)
+
+Epoch 45 | Test set: Average loss: 1.8601, Accuracy: 6495/10000 (65%)
+
+Epoch 46 | Test set: Average loss: 1.8469, Accuracy: 6466/10000 (65%)
+
+Epoch 47 | Test set: Average loss: 1.8425, Accuracy: 6440/10000 (64%)
+
+Epoch 48 | Test set: Average loss: 1.9434, Accuracy: 6397/10000 (64%)
+
+Epoch 49 | Test set: Average loss: 1.9044, Accuracy: 6420/10000 (64%)
+
+Epoch 50 | Test set: Average loss: 1.9827, Accuracy: 6386/10000 (64%)
+
+Epoch 51 | Test set: Average loss: 1.9706, Accuracy: 6418/10000 (64%)
+
+Epoch 52 | Test set: Average loss: 2.0854, Accuracy: 6323/10000 (63%)
+
+Epoch 53 | Test set: Average loss: 2.1026, Accuracy: 6348/10000 (63%)
+
+Epoch 54 | Test set: Average loss: 1.9888, Accuracy: 6467/10000 (65%)
+
+Epoch 55 | Test set: Average loss: 2.0422, Accuracy: 6405/10000 (64%)
+
+Epoch 56 | Test set: Average loss: 2.0744, Accuracy: 6373/10000 (64%)
+
+Epoch 57 | Test set: Average loss: 2.1312, Accuracy: 6453/10000 (65%)
+
+Epoch 58 | Test set: Average loss: 2.0381, Accuracy: 6421/10000 (64%)
+
+Epoch 59 | Test set: Average loss: 2.0355, Accuracy: 6435/10000 (64%)
+
+Epoch 60 | Test set: Average loss: 2.0375, Accuracy: 6404/10000 (64%)
+
+Epoch 61 | Test set: Average loss: 2.0746, Accuracy: 6475/10000 (65%)
+
+Epoch 62 | Test set: Average loss: 2.0656, Accuracy: 6465/10000 (65%)
+
+Epoch 63 | Test set: Average loss: 2.1783, Accuracy: 6432/10000 (64%)
+
+Epoch 64 | Test set: Average loss: 2.1663, Accuracy: 6354/10000 (64%)
+
+Epoch 65 | Test set: Average loss: 2.0832, Accuracy: 6490/10000 (65%)
+
+Epoch 66 | Test set: Average loss: 2.1279, Accuracy: 6461/10000 (65%)
+
+Epoch 67 | Test set: Average loss: 2.1429, Accuracy: 6362/10000 (64%)
+
+Epoch 68 | Test set: Average loss: 2.1806, Accuracy: 6431/10000 (64%)
+
+Epoch 69 | Test set: Average loss: 2.2212, Accuracy: 6390/10000 (64%)
+
+Epoch 70 | Test set: Average loss: 2.1370, Accuracy: 6429/10000 (64%)
+
+Epoch 71 | Test set: Average loss: 2.2257, Accuracy: 6423/10000 (64%)
+
+Epoch 72 | Test set: Average loss: 2.2245, Accuracy: 6364/10000 (64%)
+
+Epoch 73 | Test set: Average loss: 2.2276, Accuracy: 6419/10000 (64%)
+
+Epoch 74 | Test set: Average loss: 2.2376, Accuracy: 6377/10000 (64%)
+
+Epoch 75 | Test set: Average loss: 2.1744, Accuracy: 6460/10000 (65%)
+
+Epoch 76 | Test set: Average loss: 2.2281, Accuracy: 6435/10000 (64%)
+
+Epoch 77 | Test set: Average loss: 2.1885, Accuracy: 6499/10000 (65%)
+
+Epoch 78 | Test set: Average loss: 2.2211, Accuracy: 6445/10000 (64%)
+
+Epoch 79 | Test set: Average loss: 2.2331, Accuracy: 6402/10000 (64%)
+
+Epoch 80 | Test set: Average loss: 2.3058, Accuracy: 6409/10000 (64%)
+
+Epoch 81 | Test set: Average loss: 2.2340, Accuracy: 6454/10000 (65%)
+
+Epoch 82 | Test set: Average loss: 2.2492, Accuracy: 6429/10000 (64%)
+
+Epoch 83 | Test set: Average loss: 2.2617, Accuracy: 6439/10000 (64%)
+
+Epoch 84 | Test set: Average loss: 2.3445, Accuracy: 6332/10000 (63%)
+
+Epoch 85 | Test set: Average loss: 2.2989, Accuracy: 6461/10000 (65%)
+
+Epoch 86 | Test set: Average loss: 2.2976, Accuracy: 6356/10000 (64%)
+
+Epoch 87 | Test set: Average loss: 2.3176, Accuracy: 6443/10000 (64%)
+
+Epoch 88 | Test set: Average loss: 2.3265, Accuracy: 6414/10000 (64%)
+
+Epoch 89 | Test set: Average loss: 2.3106, Accuracy: 6469/10000 (65%)
+
+Epoch 90 | Test set: Average loss: 2.3021, Accuracy: 6446/10000 (64%)
+
+Epoch 91 | Test set: Average loss: 2.2616, Accuracy: 6484/10000 (65%)
+
+Epoch 92 | Test set: Average loss: 2.2854, Accuracy: 6505/10000 (65%)
+
+Epoch 93 | Test set: Average loss: 2.3700, Accuracy: 6444/10000 (64%)
+
+Epoch 94 | Test set: Average loss: 2.3296, Accuracy: 6495/10000 (65%)
+
+Epoch 95 | Test set: Average loss: 2.3407, Accuracy: 6518/10000 (65%)
+
+Epoch 96 | Test set: Average loss: 2.3630, Accuracy: 6454/10000 (65%)
+
+Epoch 97 | Test set: Average loss: 2.4226, Accuracy: 6439/10000 (64%)
+
+Epoch 98 | Test set: Average loss: 2.3247, Accuracy: 6508/10000 (65%)
+
+Epoch 99 | Test set: Average loss: 2.3134, Accuracy: 6540/10000 (65%)
+
+Epoch 100 | Test set: Average loss: 2.4000, Accuracy: 6489/10000 (65%)
+
+*************************************
+Log_2(T) training speed: -12.47 S
+Log_2(T) inference speed: -13.03 S
+Avg training speed per epoch: 8.78 S
+Avg testing speed per cycle: 1.20 S
+*************************************
+
+Errors, warnings, messages:
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: xxiaowb (xxiaowb-columbia-university). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.7
+wandb: Run data is saved locally in C:\Users\xxiao\Downloads\Xiao\ViT-Performer\wandb\run-20241206_061910-bamadn2u
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run magic-silence-75
+wandb:  View project at https://wandb.ai/xxiaowb-columbia-university/vit-performer
+wandb:  View run at https://wandb.ai/xxiaowb-columbia-university/vit-performer/runs/bamadn2u
+wandb:                                                                                
+wandb: 
+wandb: Run summary:
+wandb:         epoch 99.0039
+wandb: learning_rate 0.00025
+wandb: test_accuracy 64.89
+wandb:     test_loss 2.40004
+wandb:    train_loss 0.01513
+wandb: 
+wandb:  View run magic-silence-75 at: https://wandb.ai/xxiaowb-columbia-university/vit-performer/runs/bamadn2u
+wandb:  View project at: https://wandb.ai/xxiaowb-columbia-university/vit-performer
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: .\wandb\run-20241206_061910-bamadn2u\logs
+
+Exit code: 0
+================================================================================
+

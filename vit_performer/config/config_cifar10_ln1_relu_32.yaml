@@ -1,47 +1,48 @@
 # Model hyperparameters
 model:
   use_performer: True
-  image_size: 256
-  patch_size: 16
-  num_classes: 365
-  model_depth: 12
-  model_dim: 768
-  heads: 12
+  print_model: False
+  image_size: 32
+  patch_size: 4
+  num_classes: 10
+  model_depth: 4
+  model_dim: 128
   dim_head: 64
-  dropout: 0.1
-  kernel_fn: "ReLU"
+  heads: 4
+  dropout: 0.2
+  kernel_fn: "LearnableReLU1" # ReLU Softmax
   proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
+  redraw_interval: 2500
+  random_features: 32
+  feedforward_dim_multiplier: 2
 
 # Training hyperparameters
 train:
   batch_size: 256
-  test_batch_size: 128
-  epochs: 90
-  lr: 0.001
+  test_batch_size: 1000
+  epochs: 100
+  lr: 0.0005
   gamma: 0.7
   optimizer: "AdamW"
-  weight_decay: 0.03
+  weight_decay: 0.1
   scheduler: "CosineAnnealingLR"
-  T_max: 300
+  T_max: 200
   save_model: True
 
 # Dataset settings
 dataset:
-  name: "Places365"
-  small: True
+  name: "CIFAR10"
   transform: 
-    - type: "Resize"
-      size: [224, 224]
     - type: "ToTensor"
     - type: "Normalize"
-      mean: [0.485, 0.456, 0.406]
-      std: [0.229, 0.224, 0.225]
+      mean: [0.5, 0.5, 0.5]
+      std: [0.5, 0.5, 0.5]
 
 # Wandb configuration
 wandb:
   project: "vit-performer"
   use_wandb: true
-  log_interval: 50
+  log_interval: 10
   dry_run: false
 
 # Device settings
