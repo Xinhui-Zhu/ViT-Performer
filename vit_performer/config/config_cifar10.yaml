@@ -1,51 +1,52 @@
-# Model hyperparameters
-model:
-  use_performer: True
-  image_size: 32
-  patch_size: 4
-  num_classes: 10
-  model_depth: 4
-  model_dim: 128
-  dim_head: 64
-  heads: 4
-  dropout: 0.2
-  kernel_fn: "Softmax" # ReLU Softmax
-  proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
-  redraw_interval: 2500
-  random_features: 16
-  feedforward_dim_multiplier: 2
 
-# Training hyperparameters
-train:
-  batch_size: 256
-  test_batch_size: 1000
-  epochs: 100
-  lr: 0.0005
-  gamma: 0.7
-  optimizer: "AdamW"
-  weight_decay: 0.1
-  scheduler: "CosineAnnealingLR"
-  T_max: 200
-  save_model: True
+model: 
+    use_performer: True
+    image_size: 32
+    patch_size: 4
+    num_classes: 10
+    model_depth: 4
+    model_dim: 128
+    dim_head: 64
+    mlp_dim: 256
+    heads: 4
+    dropout: 0.2
+    kernel_fn: "LearnableReLU1"
+    proj_type: "default"  # Options: ['disabled', 'default', 'learnable']
 
-# Dataset settings
-dataset:
-  name: "CIFAR10"
-  transform: 
-    - type: "ToTensor"
-    - type: "Normalize"
-      mean: [0.5, 0.5, 0.5]
-      std: [0.5, 0.5, 0.5]
+    redraw_interval: 2500  #
+    random_features: 32  #
+    feedforward_dim_multiplier: 2  #
 
-# Wandb configuration
-wandb:
-  project: "vit-performer"
-  use_wandb: true
-  log_interval: 10
-  dry_run: false
+train: 
+    batch_size: 256
+    test_batch_size: 1000
+    epochs: 100
+    lr: 0.0005
+    gamma: 0.7
+    optimizer: "AdamW"
+    weight_decay: 0.1
+    scheduler: "CosineAnnealingLR"
+    T_max: 200
+    save_model: True
 
-# Device settings
-device:
-  no_cuda: false
-  no_mps: false
-  seed: 1
+dataset: 
+    name: "CIFAR10"
+    transform:
+        - type: "ToTensor"
+        - type: "Normalize"
+          mean: [0.5, 0.5, 0.5]
+          std: [0.5, 0.5, 0.5]
+
+
+
+wandb: 
+    project: "vit-performer"
+    use_wandb: True
+    log_interval: 10
+    dry_run: False
+
+device: 
+    no_cuda: False
+    no_mps: False
+    seed: 1
+  

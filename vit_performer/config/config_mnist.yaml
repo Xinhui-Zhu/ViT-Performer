@@ -7,12 +7,15 @@ model:
   patch_size: 7
   num_classes: 10
   model_depth: 8
-  model_dim: 512
-  heads: 8
+  model_dim: 256
+  heads: 4
   dim_head: 64
-  dropout: 0.1
+  dropout: 0.2
   kernel_fn: "ReLU"
   proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
+  redraw_interval: 500
+  random_features: 64
+  feedforward_dim_multiplier: 2
 
 # Training hyperparameters
 train:
@@ -23,7 +26,8 @@ train:
   gamma: 0.7
   optimizer: "Adadelta"  
   weight_decay: 0.01
-  scheduler: "StepLR"  
+  scheduler: "CosineAnnealingLR"  
+  T_max: 10
   save_model: True
 
 # Dataset settings
@@ -37,7 +41,7 @@ dataset:
 
 # Wandb configuration
 wandb:
-  project: "vit-performer"
+  project: "vit-performer-mnist"
   use_wandb: true
   log_interval: 10
   dry_run: false
@@ -47,3 +51,12 @@ device:
   no_cuda: false
   no_mps: false
   seed: 1
+
+
+
+
+
+
+
+ 
+

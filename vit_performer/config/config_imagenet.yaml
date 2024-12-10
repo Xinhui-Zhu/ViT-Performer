@@ -2,32 +2,38 @@
 model:
   use_performer: True
   image_size: 224
-  patch_size: 16
-  num_classes: 1000
-  model_depth: 12
-  model_dim: 768
-  heads: 12
-  dim_head: 64
-  dropout: 0.1
+  patch_size: 8
+  num_classes: 200
+  model_depth: 4
+  model_dim: 192
+  heads: 8
+  dim_head: 32
+  dropout: 0.3
   kernel_fn: "ReLU"
   proj_type: "default"  # TODO: change this! ['disabled', 'default', 'learnable']
+  redraw_interval: 2500
+  random_features: 4
+  feedforward_dim_multiplier: 4
+
+
 
 # Training hyperparameters
 train:
   batch_size: 256
-  test_batch_size: 256
-  epochs: 90
-  lr: 0.001
+  test_batch_size: 128
+  epochs: 30
+  lr: 0.0005
   gamma: 0.7
   optimizer: "AdamW"
-  weight_decay: 0.03
+  weight_decay: 0.01
   scheduler: "CosineAnnealingLR"
-  T_max: 300
+  T_max: 30
   save_model: True
 
 # Dataset settings
 dataset:
-  name: "GATE-engine/mini_imagenet"
+  name: "TinyImageNet"
+  small: True
   transform: 
     - type: "Resize"
       size: [224, 224]
@@ -38,13 +44,16 @@ dataset:
 
 # Wandb configuration
 wandb:
-  project: "vit-performer"
+  project: "vit-performer-tiny-imagenet"
   use_wandb: true
   log_interval: 50
-  dry_run: false
+  dry_run: False
 
 # Device settings
 device:
-  no_cuda: false
-  no_mps: false
+  no_cuda: False
+  no_mps: False
   seed: 1
+
+
+
